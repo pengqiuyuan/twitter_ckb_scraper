@@ -11,7 +11,7 @@ path.mkdir(parents=True, exist_ok=True)
 since_date = str(datetime.datetime.today().date() - datetime.timedelta(days=1))
 timestamp = datetime.datetime.now().strftime("%Y%m%d%H%M%S")
 
-keywords = ["Tsinghua University"]
+keywords = ["Tsinghua University","清华大学"]
 
 def sns_scrape(keyword):
     json_file = path/(str(datetime.datetime.today().date()) + "_" + timestamp)
