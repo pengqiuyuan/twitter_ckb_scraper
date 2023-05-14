@@ -8,10 +8,10 @@ import time
 path = pathlib.Path("./data/")
 path.mkdir(parents=True, exist_ok=True)
 
-since_date = str(datetime.datetime.today().date() - datetime.timedelta(days=1))
+since_date = str(datetime.datetime.today().date() - datetime.timedelta(days=6))
 timestamp = datetime.datetime.now().strftime("%Y%m%d%H%M%S")
 
-keywords = ["Tsinghua University","清华大学"]
+keywords = ["Tsinghua_University", "Peking_University", "Renmin_University", "清华大学", "北京大学", "人民大学"]
 
 def sns_scrape(keyword):
     os.system(f'snscrape --jsonl --progress --since {since_date} twitter-search "{keyword}" > temp.json')
