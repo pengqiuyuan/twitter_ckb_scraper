@@ -14,26 +14,24 @@ timestamp = datetime.datetime.now().strftime("%Y%m%d%H%M%S")
 keywords = ["Tsinghua University","清华大学"]
 
 def sns_scrape(keyword):
-    json_file = path/(str(datetime.datetime.today().date()) + "_" + timestamp)
-    os.system(f'snscrape --jsonl --progress --since {since_date} twitter-search "{keyword}" > {json_file}.json')
-
-    # 从 JSON 文件中读取数据
-    with open(str(json_file) + ".json", "r", encoding="utf8") as file:
+    os.system(f'snscrape --jsonl --progress --since {since_date} twitter-search "{keyword}" > temp.json')
+    with open("temp.json", "r", encoding="utf8") as file:
         data = [json.loads(line) for line in file]
+    os.remove("temp.json")
+    return data
 
-    # 将数据转换为 DataFrame
-    df = pd.json_normalize(data)
-
-    # 选择部分有用的列
+if __name__ == "__main__":
+    all_data = []
+    for keyword in keywords:
+        all_data.extend(sns_scrape(keyword))
+    json_file = path/(str(datetime.datetime.today().date()) + "_" + timestamp)
+    with open(str(json_file) + ".json", "w", encoding="utf8") as file:
+        for entry in all_data:
+            json.dump(entry, file)
+            file.write("\n")
+    df = pd.json_normalize(all_data)
     useful_columns = ["url", "date", "content", "replyCount", "retweetCount", "likeCount", 
                       "user.username", "user.displayname", "user.verified", "user.followersCount", 
                       "user.friendsCount", "user.statusesCount"]
     df = df[useful_columns]
-
-    # 将 DataFrame 保存为 Excel 文件
     df.to_excel(str(json_file) + ".xlsx", index=False)
-
-if __name__ == "__main__":
-    for keyword in keywords:
-        sns_scrape(keyword)
-        time.sleep(5)  # 增加5秒延迟
