@@ -9,7 +9,7 @@ since_date = str(datetime.datetime.today().date() - datetime.timedelta(days=1))
 json_file = path/str(datetime.datetime.today().date())
 
 def sns_scrape():
-    os.system(f'snscrape --jsonl --progress --since {since_date} twitter-search "lang:ckb" > {json_file}.json')
+    os.system(f'snscrape --jsonl --progress --since {since_date} twitter-search "新疆" > {json_file}.json')
 
 
 if __name__ == "__main__":
