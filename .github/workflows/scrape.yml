@@ -4,6 +4,7 @@ on:
   push:
   workflow_dispatch:
   schedule:
+  # 每周日的UTC时间1点执行
   - cron: '0 1 * * 0'
 
 jobs:
