@@ -3,6 +3,7 @@ import os
 import pathlib
 import json
 import pandas as pd
+import time
 
 path = pathlib.Path("./data/")
 path.mkdir(parents=True, exist_ok=True)
@@ -35,3 +36,4 @@ def sns_scrape(keyword):
 if __name__ == "__main__":
     for keyword in keywords:
         sns_scrape(keyword)
+        time.sleep(5)  # 增加5秒延迟
